@@ -1,0 +1,4 @@
+source "http://ruby.taobao.org"
+
+gem 'alfred-workflow', '>= 1.6.0'
+
