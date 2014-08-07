@@ -35,10 +35,16 @@ module DoubanFM
     response.sub /\n$/, ''
   end
 
+  def self.paused?
+    execute_js('DBR.is_paused()') == '1'
+  end
+
+  def self.liked?
+    execute_js('DBR.selected_like()') == '1'
+  end
+
   def self.current_song
-    data = JSON.parse execute_js 'localStorage.bubbler_song_info'
-    data['liked'] = execute_js('DBR.selected_like()') == '1'
-    data
+    JSON.parse execute_js 'localStorage.bubbler_song_info'
   end
 
   def self.act command

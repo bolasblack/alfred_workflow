@@ -41,11 +41,11 @@ def show_options feedback
   )
 
   current_song = DoubanFM.current_song
-  song_name = current_song['song_name']
-  song_name += ' [喜欢]' if current_song['liked']
+  like_status = if DoubanFM.liked? then '♥' else '♡' end
+  play_status = if DoubanFM.paused? then '‖' else '►' end
   feedback.add_item(
     uid: 'song_name',
-    title: "当前：#{song_name}",
+    title: "#{like_status} #{play_status} #{current_song['song_name']} - #{current_song['artist']}",
     autocomplete: 'autocomplete',
     order: 257
   )
