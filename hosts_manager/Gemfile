@@ -1,0 +1,5 @@
+# A sample Gemfile
+source "https://ruby.taobao.org"
+
+gem 'alfred-workflow', '>= 1.6.0'
+gem "hosts"
