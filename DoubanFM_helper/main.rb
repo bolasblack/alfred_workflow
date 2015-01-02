@@ -1,9 +1,9 @@
 # encoding: utf-8
 
-require 'rubygems'
-require 'bundler/setup'
-require 'alfred'
+require 'rubygems' unless defined? Gem
+require './bundle/bundler/setup'
 
+require 'alfred'
 require './douban_fm'
 
 module Alfred
@@ -80,27 +80,22 @@ Alfred.with_friendly_error do |alfred|
 
   feedback = alfred.feedback
 
-  unless DoubanFM.cli_avaiable?
+  command = ARGV[0]
+
+  if not DoubanFM.cli_avaiable?
     show_requirement feedback
     puts feedback.to_xml
-    return
-  end
-
-  unless DoubanFM.tab_exist?
+  elsif not DoubanFM.tab_exist?
     show_need_tab feedback
     puts feedback.to_xml
-    return
-  end
-
-  command = ARGV[0]
-  if command.nil? or command.empty?
+  elsif command.nil? or command.empty?
     if (fb = feedback.get_cached_feedback).nil?
       show_options feedback
       feedback.put_cached_feedback
     else
       feedback = fb
     end
-    puts feedback.to_xml
+    puts feedback.to_xml command
   elsif command == 'share'
     puts DoubanFM.current_song['url']
   else
@@ -108,4 +103,3 @@ Alfred.with_friendly_error do |alfred|
     feedback.clean_cache()
   end
 end
-
